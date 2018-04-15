@@ -2,6 +2,7 @@
   "name": "hn-reader",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://mauser1.github.io/hn-reader/",
   "dependencies": {
     "axios": "^0.18.0",
     "firebase": "^4.12.1",
@@ -15,6 +16,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "deploy" : "npm run build&&gh-pages -d build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "node_modules/.bin/eslint .",
@@ -34,6 +36,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.7.0",
+    "gh-pages": "^1.1.0",
     "prettier": "^1.12.0"
   }
 }

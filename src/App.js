@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import moment from "moment";
-import { RaisedButton, FlatButton, Divider } from "material-ui";
+import { FlatButton } from "material-ui";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import Appbar from "./containers/Appbar";

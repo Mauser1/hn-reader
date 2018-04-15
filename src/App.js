@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import moment from "moment";
 import { RaisedButton, FlatButton, Divider } from "material-ui";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 import Appbar from "./containers/Appbar";
 import Stories from "./containers/Stories";
 
 import api from "./network/api";
-import InfiniteScroll from "react-infinite-scroll-component";
 
 const QueryIcons = props => (
   <div className="query-icons">

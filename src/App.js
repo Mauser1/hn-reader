@@ -16,11 +16,24 @@ const QueryIcons = props => (
   </div>
 );
 
+function parseStories(index, data) {
+  return data.slice(index, index + 30).map(story => ({
+    id: story.id,
+    title: story.title,
+    by: story.by,
+    url: story.url,
+    points: story.score,
+    commentCount: story.descendants,
+    ago: moment.unix(story.time).fromNow()
+  }));
+}
+
 class App extends Component {
   state = {
     stories: [],
     query: "topstories",
-    index: 0
+    index: 0,
+    info: null
   };
   componentDidMount() {
     const { query } = this.state;
@@ -36,17 +49,20 @@ class App extends Component {
     });
   };
   updateStories = data => {
+    if (this.state.index === 0) {
+      this.populateStories(data);
+    } else {
+      this.extendStories(data);
+    }
+  };
+  populateStories = data => {
+    const index = 0;
+    const stories = parseStories(index, data);
+    this.setState({ stories });
+  };
+  extendStories = data => {
     const { index, stories } = this.state;
-
-    const newStories = data.slice(index, index + 30).map(story => ({
-      id: story.id,
-      title: story.title,
-      by: story.by,
-      url: story.url,
-      points: story.score,
-      commentCount: story.descendants,
-      ago: moment.unix(story.time).fromNow()
-    }));
+    const newStories = parseStories(index, data);
     this.setState({ stories: stories.concat(newStories) });
   };
   loadMore = () => {
@@ -54,7 +70,7 @@ class App extends Component {
     const { index } = this.state;
     if (this.state.stories.length < 30) {
       newIndex = index - 30;
-      this.setState({ index: newIndex });
+      this.setState({ index: newIndex, info: "You have loaded all stories!" });
       return;
     }
     newIndex = index + 30;
@@ -67,6 +83,9 @@ class App extends Component {
         <Appbar onQueryChange={this.onQueryChange} />
         <QueryIcons makeQuery={this.makeQuery} />
         <Stories stories={this.state.stories} />
+        <br />
+        <b style={{ color: "blue" }}>{this.state.info}</b>
+        <br />
         <RaisedButton onClick={this.loadMore}>
           <b>Load more</b>
         </RaisedButton>

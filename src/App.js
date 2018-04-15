@@ -58,7 +58,7 @@ class App extends Component {
   populateStories = data => {
     const index = 0;
     const stories = parseStories(index, data);
-    this.setState({ stories });
+    this.setState({ stories, info: null });
   };
   extendStories = data => {
     const { index, stories } = this.state;

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import moment from "moment";
 import { RaisedButton, FlatButton, Divider } from "material-ui";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 import Appbar from "./containers/Appbar";
 import Stories from "./containers/Stories";
@@ -33,16 +34,13 @@ class App extends Component {
     stories: [],
     query: "topstories",
     index: 0,
-    info: null
+    info: null,
+    hasMore: true
   };
   componentDidMount() {
     const { query } = this.state;
     this.fetchStories(query);
   }
-  makeQuery = query => {
-    this.setState({ query, index: 0 });
-    this.fetchStories(query);
-  };
   fetchStories = query => {
     api.storiesRef(`${query}`).once("value", snapshot => {
       api.fetchItems(snapshot.val(), this.updateStories);
@@ -65,31 +63,54 @@ class App extends Component {
     const newStories = parseStories(index, data);
     this.setState({ stories: stories.concat(newStories) });
   };
+  makeQuery = query => {
+    this.setState({ query, index: 0, hasMore: true });
+    this.fetchStories(query);
+  };
   loadMore = () => {
     let newIndex;
     const { index, stories } = this.state;
     if (stories.length - index < 30) {
       newIndex = index - 30;
-      this.setState({ index: newIndex, info: "You have loaded all stories!" });
+
+      this.setState({
+        index: newIndex,
+        info: "You have loaded all stories!",
+        hasMore: false
+      });
       return;
     }
     newIndex = index + 30;
     this.setState({ index: newIndex });
     this.fetchStories(this.state.query);
   };
+  refresh = () => {
+    const { stories } = this.state;
+    const latest = stories.slice(stories.length - 30);
+    return latest;
+  };
   render() {
+    const { stories, info, hasMore } = this.state;
     return (
       <div className="App">
         <Appbar onQueryChange={this.onQueryChange} />
         <QueryIcons makeQuery={this.makeQuery} />
-        <Stories stories={this.state.stories} />
-        <br />
-        <b style={{ color: "blue" }}>{this.state.info}</b>
-        <br />
-        <RaisedButton onClick={this.loadMore}>
-          <b>Load more</b>
-        </RaisedButton>
-        <Divider />
+
+        <InfiniteScroll
+          pullDownToRefresh={false}
+          dataLength={stories.length}
+          refreshFunction={this.refresh}
+          next={this.loadMore}
+          hasMore={hasMore}
+          loader={<h4>Loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: "center" }}>
+              <b>{info}</b>
+            </p>
+          }
+        >
+          <Stories stories={stories} />
+        </InfiniteScroll>
       </div>
     );
   }

@@ -67,8 +67,8 @@ class App extends Component {
   };
   loadMore = () => {
     let newIndex;
-    const { index } = this.state;
-    if (this.state.stories.length < 30) {
+    const { index, stories } = this.state;
+    if (stories.length - index < 30) {
       newIndex = index - 30;
       this.setState({ index: newIndex, info: "You have loaded all stories!" });
       return;

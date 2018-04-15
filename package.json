@@ -16,17 +16,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy" : "npm run build&&gh-pages -d build",
+    "deploy": "yarn build && gh-pages -d build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "node_modules/.bin/eslint .",
     "precommit": "lint-staged"
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,json}": [
-      "prettier --write",
-      "git add"
-    ]
   },
   "devDependencies": {
     "eslint": "^4.19.1",

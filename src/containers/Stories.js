@@ -8,6 +8,7 @@ class Stories extends Component {
     return this.props.stories.map(story => <Story story={story} />);
   }
   render() {
+    console.log(this.props.stories);
     if (!this.props.stories) {
       return this.renderLoading();
     }

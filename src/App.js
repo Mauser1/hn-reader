@@ -36,8 +36,9 @@ class App extends Component {
     });
   };
   updateStories = data => {
-    const { index } = this.state;
-    const stories = data.slice(index, index + 30).map(story => ({
+    const { index, stories } = this.state;
+
+    const newStories = data.slice(index, index + 30).map(story => ({
       id: story.id,
       title: story.title,
       by: story.by,
@@ -46,7 +47,7 @@ class App extends Component {
       commentCount: story.descendants,
       ago: moment.unix(story.time).fromNow()
     }));
-    this.setState({ stories });
+    this.setState({ stories: stories.concat(newStories) });
   };
   loadMore = () => {
     let newIndex;

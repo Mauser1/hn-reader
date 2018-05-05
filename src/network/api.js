@@ -1,14 +1,14 @@
-import firebase from "firebase";
+import firebase from 'firebase';
 
-const API_BASE_URL = "https://hacker-news.firebaseio.com";
-const API_VERS = "/v0";
+const API_BASE_URL = 'https://hacker-news.firebaseio.com';
+const API_VERS = '/v0';
 const config = { databaseURL: API_BASE_URL };
 firebase.initializeApp(config);
 
 const api = firebase.database().ref(API_VERS);
 
 function fetchItem(id, cb) {
-  itemRef(id).once("value", snapshot => {
+  itemRef(id).once('value', snapshot => {
     cb(snapshot.val());
   });
 }

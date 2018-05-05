@@ -1,19 +1,19 @@
-import React, { Component } from "react";
-import moment from "moment";
-import { FlatButton } from "material-ui";
-import InfiniteScroll from "react-infinite-scroll-component";
+import React, { Component } from 'react';
+import moment from 'moment';
+import { FlatButton } from 'material-ui';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
-import Appbar from "./containers/Appbar";
-import Stories from "./containers/Stories";
+import Appbar from './containers/Appbar';
+import Stories from './containers/Stories';
 
-import api from "./network/api";
+import api from './network/api';
 
 const QueryIcons = props => (
   <div className="query-icons">
-    <FlatButton label="Top" onClick={() => props.makeQuery("topstories")} />
-    <FlatButton label="Ask" onClick={() => props.makeQuery("askstories")} />
-    <FlatButton label="Show" onClick={() => props.makeQuery("showstories")} />
-    <FlatButton label="Jobs" onClick={() => props.makeQuery("jobstories")} />
+    <FlatButton label="Top" onClick={() => props.makeQuery('topstories')} />
+    <FlatButton label="Ask" onClick={() => props.makeQuery('askstories')} />
+    <FlatButton label="Show" onClick={() => props.makeQuery('showstories')} />
+    <FlatButton label="Jobs" onClick={() => props.makeQuery('jobstories')} />
   </div>
 );
 
@@ -32,7 +32,7 @@ function parseStories(index, data) {
 class App extends Component {
   state = {
     stories: [],
-    query: "topstories",
+    query: 'topstories',
     index: 0,
     info: null,
     hasMore: true
@@ -42,7 +42,7 @@ class App extends Component {
     this.fetchStories(query);
   }
   fetchStories = query => {
-    api.storiesRef(`${query}`).once("value", snapshot => {
+    api.storiesRef(`${query}`).once('value', snapshot => {
       api.fetchItems(snapshot.val(), this.updateStories);
     });
   };
@@ -75,7 +75,7 @@ class App extends Component {
 
       this.setState({
         index: newIndex,
-        info: "You have loaded all stories!",
+        info: 'You have loaded all stories!',
         hasMore: false
       });
       return;
@@ -104,7 +104,7 @@ class App extends Component {
           hasMore={hasMore}
           loader={<h4>Loading...</h4>}
           endMessage={
-            <p style={{ textAlign: "center" }}>
+            <p style={{ textAlign: 'center' }}>
               <b>{info}</b>
             </p>
           }

@@ -1,5 +1,5 @@
-import getMuiTheme from "material-ui/styles/getMuiTheme";
-import { orange800 } from "material-ui/styles/colors";
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { orange800 } from 'material-ui/styles/colors';
 
 // TODO?
 const muiTheme = getMuiTheme({

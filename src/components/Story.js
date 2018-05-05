@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const Story = props => (
   <div className="story">
@@ -29,8 +29,8 @@ const Story = props => (
           href={`https://news.ycombinator.com/item?id=${props.story.id}`}
           target="_blank"
         >
-          {props.story.commentCount}{" "}
-          {props.story.commentCount === 1 ? "Comment" : "Comments"}
+          {props.story.commentCount}{' '}
+          {props.story.commentCount === 1 ? 'Comment' : 'Comments'}
         </a>
       </li>
     </ul>

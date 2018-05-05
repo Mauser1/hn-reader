@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import Story from "../components/Story";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import Story from '../components/Story';
 
 class Stories extends Component {
   renderLoading = () => <div>Loading ...</div>;

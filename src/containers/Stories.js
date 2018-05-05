@@ -5,10 +5,11 @@ import Story from '../components/Story';
 class Stories extends Component {
   renderLoading = () => <div>Loading ...</div>;
   renderStories() {
-    return this.props.stories.map(story => <Story story={story} />);
+    return this.props.stories.map((story, index) => (
+      <Story story={story} index={index + 1} />
+    ));
   }
   render() {
-    console.log(this.props.stories);
     if (!this.props.stories) {
       return this.renderLoading();
     }
@@ -16,7 +17,22 @@ class Stories extends Component {
   }
 }
 
-Stories.propTypes = {
-  stories: PropTypes.array
+Stories.defaultProps = {
+  stories: null
 };
+
+Stories.propTypes = {
+  stories: PropTypes.arrayOf(
+    PropTypes.shape({
+      ago: PropTypes.string,
+      by: PropTypes.string,
+      commentCount: PropTypes.number,
+      id: PropTypes.number,
+      points: PropTypes.number,
+      title: PropTypes.string,
+      url: PropTypes.string
+    })
+  )
+};
+
 export default Stories;

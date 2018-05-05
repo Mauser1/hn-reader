@@ -1,56 +1,66 @@
 body {
-margin: 0;
-padding: 0;
-font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
-background: rgb(224, 224, 224);
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+  background: rgb(224, 224, 224);
 }
 
 *,
 *:before,
 *:after {
-box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 a:not([type="button"]) {
-color: #222;
-border-bottom: 1px solid #222;
-text-decoration: none;
-
-&:hover,
-&:focus {
-  color: #444;
-  border-color: transparent;
+  color: #222;
+  border-bottom: 1px solid #222;
   text-decoration: none;
-  transition: all 0.2s ease;
-}
+
+  &:hover,
+  &:focus {
+    color: #444;
+    border-color: transparent;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
 }
 
 .story {
-background: "#f5f5f5";
-size: 14px;
+  background: "#f5f5f5";
+  size: 14px;
 }
 
 .story-footer {
-font-weight: 400;
-font-size: 12px;
-color: #757575;
+  font-weight: 400;
+  font-size: 12px;
+  color: #757575;
 }
+
 .story ul {
-margin: 0;
-padding: 0;
+  margin: 0;
 }
+
 .story ul li {
-padding: 0px;
-display: inline;
+  padding: 0px;
+  display: inline;
 }
+
 .story ul li:after {
-content: " \B7 ";
+  content: " \B7 ";
 }
+
 .story ul li:last-child:after {
-content: "";
+  content: "";
 }
 
 .votes {
-font-weight: 700;
-font-color: #212121;
+  font-weight: 700;
+  font-color: #212121;
+}
+
+.index {
+  float: left;
+  padding: 15px;
+  font-weight: bold;
+  color: grey;
 }

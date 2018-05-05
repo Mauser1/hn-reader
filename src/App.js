@@ -8,17 +8,17 @@ import Stories from './containers/Stories';
 
 import api from './network/api';
 
-const QueryIcons = props => (
+const QueryIcons = ({ makeQuery }) => (
   <div className="query-icons">
-    <FlatButton label="Top" onClick={() => props.makeQuery('topstories')} />
-    <FlatButton label="Ask" onClick={() => props.makeQuery('askstories')} />
-    <FlatButton label="Show" onClick={() => props.makeQuery('showstories')} />
-    <FlatButton label="Jobs" onClick={() => props.makeQuery('jobstories')} />
+    <FlatButton label="Top" onClick={() => makeQuery('topstories')} />
+    <FlatButton label="Ask" onClick={() => makeQuery('askstories')} />
+    <FlatButton label="Show" onClick={() => makeQuery('showstories')} />
+    <FlatButton label="Jobs" onClick={() => makeQuery('jobstories')} />
   </div>
 );
 
-function parseStories(index, data) {
-  return data.slice(index, index + 30).map(story => ({
+const parseStories = (index, data) =>
+  data.slice(index, index + 30).map(story => ({
     id: story.id,
     title: story.title,
     by: story.by,
@@ -27,7 +27,6 @@ function parseStories(index, data) {
     commentCount: story.descendants,
     ago: moment.unix(story.time).fromNow()
   }));
-}
 
 class App extends Component {
   state = {
@@ -95,7 +94,6 @@ class App extends Component {
       <div className="App">
         <Appbar onQueryChange={this.onQueryChange} />
         <QueryIcons makeQuery={this.makeQuery} />
-
         <InfiniteScroll
           pullDownToRefresh={false}
           dataLength={stories.length}

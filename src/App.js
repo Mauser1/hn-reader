@@ -1,32 +1,10 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { FlatButton } from 'material-ui';
 import InfiniteScroll from 'react-infinite-scroll-component';
-
 import Appbar from './containers/Appbar';
 import Stories from './containers/Stories';
-
+import QueryIcons from './components/QueryIcons';
 import api from './network/api';
-
-const QueryIcons = ({ makeQuery }) => (
-  <div className="query-icons">
-    <FlatButton label="Top" onClick={() => makeQuery('topstories')} />
-    <FlatButton label="Ask" onClick={() => makeQuery('askstories')} />
-    <FlatButton label="Show" onClick={() => makeQuery('showstories')} />
-    <FlatButton label="Jobs" onClick={() => makeQuery('jobstories')} />
-  </div>
-);
-
-const parseStories = (index, data) =>
-  data.slice(index, index + 30).map(story => ({
-    id: story.id,
-    title: story.title,
-    by: story.by,
-    url: story.url,
-    points: story.score,
-    commentCount: story.descendants,
-    ago: moment.unix(story.time).fromNow()
-  }));
 
 class App extends Component {
   state = {
@@ -40,6 +18,16 @@ class App extends Component {
     const { query } = this.state;
     this.fetchStories(query);
   }
+  parseStories = (index, data) =>
+    data.slice(index, index + 30).map(story => ({
+      id: story.id,
+      title: story.title,
+      by: story.by,
+      url: story.url,
+      points: story.score,
+      commentCount: story.descendants,
+      ago: moment.unix(story.time).fromNow()
+    }));
   fetchStories = query => {
     api.storiesRef(`${query}`).once('value', snapshot => {
       api.fetchItems(snapshot.val(), this.updateStories);
@@ -54,12 +42,13 @@ class App extends Component {
   };
   populateStories = data => {
     const index = 0;
-    const stories = parseStories(index, data);
+    console.log(this);
+    const stories = this.parseStories(index, data);
     this.setState({ stories, info: null });
   };
   extendStories = data => {
     const { index, stories } = this.state;
-    const newStories = parseStories(index, data);
+    const newStories = this.parseStories(index, data);
     this.setState({ stories: stories.concat(newStories) });
   };
   makeQuery = query => {

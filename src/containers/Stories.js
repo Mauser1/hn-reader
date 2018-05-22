@@ -5,9 +5,13 @@ import Story from '../components/Story';
 class Stories extends Component {
   renderLoading = () => <div>Loading ...</div>;
   renderStories() {
-    return this.props.stories.map((story, index) => (
-      <Story story={story} index={index + 1} />
-    ));
+    return (
+      <ol>
+        {this.props.stories.map((story, index) => (
+          <Story story={story} index={index + 1} />
+        ))}
+      </ol>
+    );
   }
   render() {
     if (!this.props.stories) {

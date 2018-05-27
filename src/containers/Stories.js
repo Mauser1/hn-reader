@@ -29,8 +29,8 @@ Stories.propTypes = {
   stories: PropTypes.arrayOf(
     PropTypes.shape({
       ago: PropTypes.string,
-      by: PropTypes.string,
-      commentCount: PropTypes.number,
+      user: PropTypes.string,
+      comments_count: PropTypes.number,
       id: PropTypes.number,
       points: PropTypes.number,
       title: PropTypes.string,

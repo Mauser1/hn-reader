@@ -19,17 +19,17 @@ const Story = props => (
       <li>
         <b>{props.story.points} points</b> by&nbsp;
         <a href={`https://news.ycombinator.com/user?id=${props.story.by}`}>
-          {props.story.by}
+          {props.story.user}
         </a>
       </li>
-      <li>{props.story.ago}</li>
+      <li>{props.story.time_ago}</li>
       <li>
         <a
           href={`https://news.ycombinator.com/item?id=${props.story.id}`}
           target="_blank"
         >
-          {props.story.commentCount}{' '}
-          {props.story.commentCount === 1 ? 'Comment' : 'Comments'}
+          {props.story.comments_count}{' '}
+          {props.story.comments_count === 1 ? 'Comment' : 'Comments'}
         </a>
       </li>
     </ul>
@@ -39,8 +39,8 @@ const Story = props => (
 Story.propTypes = {
   story: PropTypes.shape({
     ago: PropTypes.string,
-    by: PropTypes.string,
-    commentCount: PropTypes.number,
+    user: PropTypes.string,
+    comments_count: PropTypes.number,
     id: PropTypes.number,
     points: PropTypes.number,
     title: PropTypes.string,

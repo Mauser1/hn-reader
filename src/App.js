@@ -1,98 +1,74 @@
 import React, { Component } from 'react';
-import moment from 'moment';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Appbar from './containers/Appbar';
 import Stories from './containers/Stories';
 import QueryIcons from './components/QueryIcons';
-import api from './network/api';
+import hnApi from './network/api';
 
 class App extends Component {
   state = {
-    stories: [],
-    query: 'topstories',
-    index: 0,
-    info: null,
-    hasMore: true
+    query: 'news',
+    news: { page: 1, stories: [], hasMore: true },
+    best: { page: 1, stories: [], hasMore: true },
+    show: { page: 1, stories: [], hasMore: true },
+    ask: { page: 1, stories: [], hasMore: true },
+    jobs: { page: 1, stories: [], hasMore: true }
   };
   componentDidMount() {
     const { query } = this.state;
-    this.fetchStories(query);
+    this.makeQuery(query);
   }
-  parseStories = (index, data) =>
-    data.slice(index, index + 30).map(story => ({
-      id: story.id,
-      title: story.title,
-      by: story.by,
-      url: story.url,
-      points: story.score,
-      commentCount: story.descendants,
-      ago: moment.unix(story.time).fromNow()
-    }));
-  fetchStories = query => {
-    api.storiesRef(`${query}`).once('value', snapshot => {
-      api.fetchItems(snapshot.val(), this.updateStories);
-    });
+  changeQuery = newQuery => {
+    this.setState({ query: newQuery });
+    this.makeQuery(newQuery);
   };
-  updateStories = data => {
-    if (this.state.index === 0) {
-      this.populateStories(data);
-    } else {
-      this.extendStories(data);
-    }
-  };
-  populateStories = data => {
-    const index = 0;
-    console.log(this);
-    const stories = this.parseStories(index, data);
-    this.setState({ stories, info: null });
-  };
-  extendStories = data => {
-    const { index, stories } = this.state;
-    const newStories = this.parseStories(index, data);
-    this.setState({ stories: stories.concat(newStories) });
-  };
-  makeQuery = query => {
-    this.setState({ query, index: 0, hasMore: true });
-    this.fetchStories(query);
+  makeQuery = (query, page = false) => {
+    const { stories } = this.state[query];
+    hnApi
+      .fetchStories(query, page)
+      .then(result => {
+        if (result.data.length > 0) {
+          this.setState({
+            [query]: {
+              ...this.state[query],
+              stories: stories.concat(result.data)
+            }
+          });
+        }
+        if (result.data.length === 0) {
+          this.setState({ [query]: { ...this.state[query], hasMore: false } });
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
   loadMore = () => {
-    let newIndex;
-    const { index, stories } = this.state;
-    if (stories.length - index < 30) {
-      newIndex = index - 30;
-
-      this.setState({
-        index: newIndex,
-        info: 'You have loaded all stories!',
-        hasMore: false
-      });
-      return;
-    }
-    newIndex = index + 30;
-    this.setState({ index: newIndex });
-    this.fetchStories(this.state.query);
-  };
-  refresh = () => {
-    const { stories } = this.state;
-    const latest = stories.slice(stories.length - 30);
-    return latest;
+    const { query } = this.state;
+    const { page } = this.state[query];
+    this.setState({
+      [query]: { ...this.state[query], page: page + 1 }
+    });
+    this.makeQuery(query, page);
   };
   render() {
-    const { stories, info, hasMore } = this.state;
+    const { query } = this.state;
+    const { stories, hasMore } = this.state[query];
+
     return (
       <div className="App">
-        <Appbar onQueryChange={this.onQueryChange} />
-        <QueryIcons makeQuery={this.makeQuery} />
+        <Appbar />
+        <QueryIcons changeQuery={this.changeQuery} />
         <InfiniteScroll
           pullDownToRefresh={false}
           dataLength={stories.length}
           refreshFunction={this.refresh}
           next={this.loadMore}
-          hasMore={hasMore}
           loader={<h4>Loading...</h4>}
+          hasMore={hasMore}
           endMessage={
             <p style={{ textAlign: 'center' }}>
-              <b>{info}</b>
+              <b>No more stories</b>
             </p>
           }
         >

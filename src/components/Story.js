@@ -45,8 +45,7 @@ Story.propTypes = {
     points: PropTypes.number,
     title: PropTypes.string,
     url: PropTypes.string
-  }).isRequired,
-  index: PropTypes.number.isRequired
+  }).isRequired
 };
 
 export default Story;

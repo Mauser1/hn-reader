@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'http://api.hackerwebapp.com/';
+const baseURL = 'https://api.hackerwebapp.com/';
 
 const fetchStories = (storyType, page = null) =>
   axios(`${baseURL}${storyType}?page=${page}`);

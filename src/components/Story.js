@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const Story = props => (
   <li className="story" key={props.story.id}>
@@ -24,13 +25,10 @@ const Story = props => (
       </li>
       <li>{props.story.time_ago}</li>
       <li>
-        <a
-          href={`https://news.ycombinator.com/item?id=${props.story.id}`}
-          target="_blank"
-        >
+        <Link to={`/${props.story.id}`}>
           {props.story.comments_count}{' '}
           {props.story.comments_count === 1 ? 'Comment' : 'Comments'}
-        </a>
+        </Link>
       </li>
     </ul>
   </li>
@@ -44,7 +42,9 @@ Story.propTypes = {
     id: PropTypes.number,
     points: PropTypes.number,
     title: PropTypes.string,
-    url: PropTypes.string
+    url: PropTypes.string,
+    time_ago: PropTypes.number,
+    by: PropTypes.string
   }).isRequired
 };
 

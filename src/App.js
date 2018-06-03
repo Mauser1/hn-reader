@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import Appbar from './containers/Appbar';
-import Stories from './containers/Stories';
-import QueryIcons from './components/QueryIcons';
+import { BrowserRouter, Route } from 'react-router-dom';
+import { Main, Comments } from './pages';
+import { Appbar } from './containers/';
 import hnApi from './network/api';
 
 class App extends Component {
@@ -12,7 +11,8 @@ class App extends Component {
     best: { page: 1, stories: [], hasMore: true },
     show: { page: 1, stories: [], hasMore: true },
     ask: { page: 1, stories: [], hasMore: true },
-    jobs: { page: 1, stories: [], hasMore: true }
+    jobs: { page: 1, stories: [], hasMore: true },
+    comment: ''
   };
   componentDidMount() {
     const { query } = this.state;
@@ -52,28 +52,33 @@ class App extends Component {
     this.makeQuery(query, page);
   };
   render() {
-    const { query } = this.state;
+    const { query, comments } = this.state;
     const { stories, hasMore } = this.state[query];
 
     return (
       <div className="App">
         <Appbar />
-        <QueryIcons changeQuery={this.changeQuery} />
-        <InfiniteScroll
-          pullDownToRefresh={false}
-          dataLength={stories.length}
-          refreshFunction={this.refresh}
-          next={this.loadMore}
-          loader={<h4>Loading...</h4>}
-          hasMore={hasMore}
-          endMessage={
-            <p style={{ textAlign: 'center' }}>
-              <b>No more stories</b>
-            </p>
-          }
-        >
-          <Stories stories={stories} />
-        </InfiniteScroll>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
+          <div>
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <Main
+                  stories={stories}
+                  hasMore={hasMore}
+                  changeQuery={this.changeQuery}
+                  loadMore={this.loadMore}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/:id"
+              render={() => <Comments comments={comments} />}
+            />
+          </div>
+        </BrowserRouter>
       </div>
     );
   }

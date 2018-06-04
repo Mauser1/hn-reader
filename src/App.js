@@ -57,9 +57,9 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Appbar />
         <BrowserRouter basename={process.env.PUBLIC_URL}>
           <div>
+            <Appbar />
             <Route
               exact
               path="/"

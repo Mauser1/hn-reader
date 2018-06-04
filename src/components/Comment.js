@@ -24,7 +24,7 @@ class Comment extends Component {
   static propTypes = { data: PropTypes.object.isRequired };
   renderComment({ comment, nested }) {
     return (
-      <div className={`comment nested-${nested}`}>
+      <div className="comment">
         <ul>
           <li className="user"> {comment.user} </li>{' '}
           <li> {comment.time_ago} </li>{' '}

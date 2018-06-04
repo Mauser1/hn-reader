@@ -14,17 +14,18 @@ const cleanString = str => {
       .replace(/<[^>]*>/g, '');
   }
 };
-const CommentBlock = ({ comment, nested }) => {
-  console.log(comment);
-  return (
-    <div className={`comment nested-${nested}`}>
-      <ul>
-        <li className="user"> {comment.user} </li> <li> {comment.time_ago} </li>{' '}
-      </ul>
-      {cleanString(comment.content)}
-    </div>
-  );
-};
+const CommentBlock = ({ comment, nested = 0 }) => (
+  <div className={`comment nested-${nested}`}>
+    <ul>
+      <li className="user"> {comment.user} </li>
+      <li> {comment.time_ago} </li>{' '}
+    </ul>
+    {cleanString(comment.content)}
+    <a href={`https://news.ycombinator.com/reply?id=${comment.id}`}>
+      <p>Reply</p>
+    </a>
+  </div>
+);
 CommentBlock.propTypes = {
   comment: PropTypes.shape({
     user: PropTypes.string.isRequired,
@@ -32,6 +33,7 @@ CommentBlock.propTypes = {
     level: PropTypes.number.isRequired,
     time_ago: PropTypes.number.isRequired,
     content: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     comments: PropTypes.array.isRequired
   }),
   nested: PropTypes.number.isRequired

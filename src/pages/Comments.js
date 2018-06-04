@@ -15,7 +15,6 @@ class Comments extends Component {
         console.log(error);
       });
   }
-
   renderComments(comments) {
     if (comments && comments.length > 0) {
       return (
@@ -27,7 +26,7 @@ class Comments extends Component {
   }
   render() {
     return (
-      <div className="comments">
+      <div className="all-comments">
         <ul header="comment-header">
           <li className="comment-title">{this.state.commentsData.title}</li>
           <li className="comment-domain">{this.state.commentsData.domain}</li>

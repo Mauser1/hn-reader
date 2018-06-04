@@ -25,6 +25,9 @@ class Comments extends Component {
     }
   }
   render() {
+    if (this.state.commentsData.comments.length === 0) {
+      return <div>Loading...</div>;
+    }
     return (
       <div className="all-comments">
         <ul header="comment-header">
@@ -48,4 +51,5 @@ class Comments extends Component {
     );
   }
 }
+
 export default Comments;

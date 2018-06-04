@@ -58,6 +58,10 @@ ul li:last-child:after {
   display: inline;
 }
 
+.all-comments {
+  padding-left: 15px
+}
+
 .comment-title {
   font-size: 18px;
   font-weight: bold;
@@ -68,8 +72,9 @@ ul li:last-child:after {
   color: #666;
 }
 
-.comment .user {
-  font-weight: bold
+.user {
+  font-weight: bold;
+  content: none
 }
 
 .nested-1 {
